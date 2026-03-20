@@ -31,7 +31,7 @@
                 <div class="row my-4">
                     <div v-show="['one_way', 'return'].includes(form_data.active_tab)">
                         <div class="row p-0">
-                            <div class="col-12 p-0 m-0 destinations-inputs">
+                            <div class="col-12 p-0 m-0 destinations-inputs" style="position: relative;">
                                 <a class="text-decoration-none pointer" data-bs-toggle="modal"
                                    data-bs-target="#destination_modal" @click="setDestinationModalData()">
                                     <div class="input-start">
@@ -48,6 +48,9 @@
                                         </span>
                                     </div>
                                 </a>
+                                <div class="swap-destinations-btn pointer" @click="swapDestinations()">
+                                    <img :src="getImageURL('arrows_return.svg')" alt="" class="swap-icon">
+                                </div>
                                 <a class="text-decoration-none pointer" data-bs-toggle="modal"
                                    data-bs-target="#destination_modal" @click="setDestinationModalData('to')">
                                     <div class="input-end">
@@ -105,16 +108,27 @@
                         </span>
                     </div>
                 </div>
-                <div class="row justify-content-end bottom-0">
-                    <div class="col-6 booking-details-hover">
-                        <a class="booking-details pe-2 text-decoration-none pointer" data-bs-toggle="modal"
+                <div class="row mt-4">
+                    <div class="col-12 p-0">
+                        <a class="booking-details-full text-decoration-none pointer" data-bs-toggle="modal"
                            data-bs-target="#details_modal">
-                            <img :src="getImageURL('passengers.svg')" alt="">
-                            <span class="details-quantity">{{ form_data.details.passengers }}</span>
-                            <img :src="getImageURL('pets.svg')" alt="">
-                            <span class="details-quantity">{{ form_data.details.pets }}</span>
-                            <img :src="getImageURL('vehicles.svg')" alt="">
-                            <span class="details-quantity">{{ form_data.details.vehicles }}</span>
+                            <div class="booking-details-item">
+                                <img :src="getImageURL('passengers.svg')" alt="">
+                                <span class="details-label">{{ translations.adults_children_infants ?? translations.passengers }}</span>
+                                <span class="details-quantity-pill">{{ form_data.details.passengers }}</span>
+                            </div>
+                            <div class="booking-details-separator"></div>
+                            <div class="booking-details-item">
+                                <img :src="getImageURL('pets.svg')" alt="">
+                                <span class="details-label">{{ translations.pets }}</span>
+                                <span class="details-quantity-pill">{{ form_data.details.pets }}</span>
+                            </div>
+                            <div class="booking-details-separator"></div>
+                            <div class="booking-details-item">
+                                <img :src="getImageURL('vehicles.svg')" alt="">
+                                <span class="details-label">{{ translations.vehicles }}</span>
+                                <span class="details-quantity-pill">{{ form_data.details.vehicles }}</span>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -132,22 +146,27 @@
                     <span class="planner-title">
                         {{ translations.book_your_ferry_trips }}
                     </span>
-                    <small class="planner-small">
+                    <small class="planner-small mt-2">
                         {{ translations.plan_your_trip }}
                     </small>
                 </div>
-                <div v-if="recent_searches !== null" class="row">
-                    <span>{{ translations.recent_searches }}</span>
-                    <div class="row mt-3">
-                        <div v-for="(recent_search, key) in recent_searches" class="col-12">
-                            <div class="recent-search-item mb-3"
-                                 @click="setRecentSearch(key)">
-                                <span class="recent-search-item-text">{{ JSON.parse(recent_search)[0].name }}</span>
-                                <img v-if="JSON.parse(recent_search)[3] !== null"
-                                     :src="getImageURL('arrows_return.svg')" alt="">
-                                <img v-else :src="getImageURL('arrow_right_smaller.svg')" alt="">
-                                <span class="recent-search-item-text">{{ JSON.parse(recent_search)[1].name }}</span>
-                            </div>
+                <div v-if="recent_searches !== null && recent_searches.length > 0" class="row mt-2">
+                    <div class="col-12 mb-2">
+                        <span class="recent-searches-title">{{ translations.recent_searches }}</span>
+                    </div>
+                    <div class="col-12">
+                        <div v-for="(recent_search, key) in recent_searches"
+                             class="recent-search-item mb-3"
+                             @click="setRecentSearch(key)">
+                            <img :src="getImageURL('marker.svg')" alt="" class="recent-search-icon">
+                            <span class="recent-search-item-text">{{ JSON.parse(recent_search)[0].name }}</span>
+                            <img v-if="JSON.parse(recent_search)[3] !== null"
+                                 :src="getImageURL('arrows_return.svg')" alt="" class="recent-search-arrow">
+                            <img v-else :src="getImageURL('arrow_right_smaller.svg')" alt="" class="recent-search-arrow">
+                            <span class="recent-search-item-text">{{ JSON.parse(recent_search)[1].name }}</span>
+                            <span v-if="JSON.parse(recent_search)[2]" class="recent-search-date ms-auto">
+                                {{ formatDate(JSON.parse(recent_search)[2]) }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -586,6 +605,11 @@ export default {
     methods: {
         logout() {
             this.user = {'logged_in': false, 'data': null};
+        },
+        swapDestinations() {
+            let temp = this.form_data.from;
+            this.form_data.from = this.form_data.to;
+            this.form_data.to = temp;
         },
         onResize() {
             this.window_width = window.innerWidth

@@ -330,6 +330,66 @@
     background: var(--accent-color);
 }
 
+.booking-details-full {
+    display: flex;
+    height: 3.5rem;
+    padding: 0 1rem;
+    align-items: center;
+    align-self: stretch;
+    border-radius: .75rem;
+    background: var(--bg-color);
+    box-shadow: 0 .25rem .25rem 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.booking-details-full:hover {
+    background: color-mix(in srgb, var(--bg-color) 85%, var(--accent-color) 15%);
+}
+
+.booking-details-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex: 1;
+}
+
+.booking-details-separator {
+    width: .063rem;
+    height: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+    margin: 0 .5rem;
+}
+
+.details-label {
+    flex: 1;
+    color: var(--text-color);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    opacity: .6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details-quantity-pill {
+    display: flex;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 .4rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6.25rem;
+    background: var(--accent-color);
+    color: var(--text-dark-color);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
 .details-quantity {
     display: flex;
     width: 0.438rem;
@@ -341,6 +401,50 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.swap-destinations-btn {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    border-radius: 50%;
+    background: var(--bg-color);
+    border: .063rem solid rgba(255, 255, 255, 0.15);
+}
+
+.swap-destinations-btn:hover {
+    background: var(--accent-color);
+}
+
+.swap-icon {
+    width: 1rem;
+    height: 1rem;
+    rotate: 90deg;
+    filter: invert(60%) sepia(50%) saturate(400%) hue-rotate(170deg) brightness(110%);
+}
+
+.swap-destinations-btn:hover .swap-icon {
+    filter: none;
+}
+
+.tab-title {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.planner-tab-active .tab-title {
+    color: #070127;
+    font-weight: 700;
 }
 
 .details-modify-btn {
@@ -996,7 +1100,8 @@
     border: 0.063rem solid var(--Brand1);
     background: var(--Glass-2);
     cursor: pointer;
-    width: fit-content !important;
+    width: 100% !important;
+    transition: background 0.2s ease;
 }
 
 .recent-search-item:hover {
@@ -1009,6 +1114,39 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.recent-searches-title {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    opacity: 0.7;
+}
+
+.recent-search-icon {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.recent-search-arrow {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.recent-search-date {
+    color: var(--Text-Secondary);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .rotate-180 {
